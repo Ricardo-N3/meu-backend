@@ -4,7 +4,7 @@ from typing import Optional
 class schema_user(BaseModel):
     name: str
     email: str
-    password: str
+    passwords: str
     active: Optional [bool]
     admin: Optional [bool]
     
@@ -18,6 +18,6 @@ class SchemaOrder(BaseModel):
 
 class LoginSchema(BaseModel):
     email: str
-    password: str
+    passwords: str
     class Config:
         from_attributes = True

@@ -13,14 +13,14 @@ class User(Base):
     id = Column("id", Integer, primary_key=True, autoincrement=True)
     name = Column("name", String)
     email = Column("email", String, nullable=False)
-    password = Column("password", String)
+    passwords = Column("passwords", String)
     active = Column("active", Boolean)
     admin = Column("admin", Boolean, default=False)
 
-    def __init__(self, name, email, password, active=True, admin=False):
+    def __init__(self, name, email, passwords, active=True, admin=False):
         self.name = name
         self.email = email
-        self.password = password
+        self.passwords = passwords
         self.active = active
         self.admin = admin
 
