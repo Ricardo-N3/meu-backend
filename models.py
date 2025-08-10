@@ -28,12 +28,6 @@ class User(Base):
 class Order(Base):
     __tablename__ = "orders"
 
-   # ORDER_STATUS = (
-    #    ("PENDING", "PENDING"),
-    #    ("CANCELLED", "CANCELLED"),
-   #     ("FINISHED", "FINISHED")
-    #)
-
     id = Column("id", Integer, primary_key=True, autoincrement=True)
     status = Column("status", String)
     user = Column("user", ForeignKey("users.id"))

@@ -10,9 +10,9 @@ from fastapi.security import OAuth2PasswordRequestForm
 
 auth_router = APIRouter(prefix="/auth", tags=["auth"])
 
-def token_create(user_id,duration_token=timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)):
+def token_create(id_user,duration_token=timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)):
     trial_date = datetime.now(timezone.utc) + duration_token
-    dic_info = {"sub": str(user_id), "exp": trial_date}
+    dic_info = {"sub": str(id_user), "exp": trial_date}
     encoded_jwt = jwt.encode(dic_info, SECRET_KEY, ALGORITHM)
     return encoded_jwt
 
@@ -56,7 +56,7 @@ async def login(login_schema: LoginSchema, session: Session = Depends(take_sessi
                 }
 
 @auth_router.post("/login-form")
-async def login(form_datas: OAuth2PasswordRequestForm = Depends(), session: Session = Depends(take_session)):
+async def login_form(form_datas: OAuth2PasswordRequestForm = Depends(), session: Session = Depends(take_session)):
     user = user_authenticate(form_datas.username, form_datas.password, session)
     if not user:
         raise HTTPException(status_code=400, detail="User not founded or invalid credentials")

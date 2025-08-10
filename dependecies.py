@@ -16,10 +16,10 @@ def take_session():
 def verification_token(token: str = Depends(oauth2_schema), session: Session = Depends(take_session)):
     try:
         dic_info = jwt.decode(token, SECRET_KEY, ALGORITHM)
-        user_id = int(dic_info.get("sub"))
+        id_user = int(dic_info.get("sub"))
     except JWTError:
         raise HTTPException(status_code=401, detail="Access Denied, please check the validity of the token")
-    user = session.query(User).filter(User.id==user_id).first()
+    user = session.query(User).filter(User.id==id_user).first()
     if not user:
         raise HTTPException(status_code=401, detail="Invalid Access")
     return user
