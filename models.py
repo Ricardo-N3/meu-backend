@@ -53,7 +53,7 @@ class OrderItem(Base):
     flavor = Column("flavor", String)
     size = Column("size",String)
     unitary_cost = Column("unitary_cost", Float)
-    order = Column("order", ForeignKey("order.id"))
+    order = Column("order", ForeignKey("orders.id"))
 
     def __init__(self, quantity, flavor, size, unitary_cost, order):
         self.quantity = quantity
