@@ -50,7 +50,7 @@ async def login(login_schema: LoginSchema, session: Session = Depends(take_sessi
         access_token = token_create(user.id)
         refresh_token = token_create(user.id, duration_token=timedelta(days=7))
 
-        return {"acess_token":access_token,
+        return {"access_token":access_token,
                 "refresh_token":refresh_token,
                 "token_type":"Bearer"
                 }
@@ -62,7 +62,7 @@ async def login_form(form_datas: OAuth2PasswordRequestForm = Depends(), session:
         raise HTTPException(status_code=400, detail="User not founded or invalid credentials")
     else:
         access_token = token_create(user.id)
-        return {"acess_token":access_token,
+        return {"access_token":access_token,
                 "token_type":"Bearer"
                 }
 

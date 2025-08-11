@@ -4,7 +4,7 @@ from dependecies import take_session, verification_token
 from eschemas import SchemaOrder
 from models import Order, User
 
-order_router = APIRouter(prefix="/order",tags=["order"])
+order_router = APIRouter(prefix="/order",tags=["order"], dependencies=[Depends(verification_token)])
 
 @order_router.get("/")
 async def orders():
@@ -12,7 +12,7 @@ async def orders():
 
 @order_router.post("/order")
 async def order_create(order_schema: SchemaOrder, session: Session = Depends(take_session)):
-    new_order = Order(user=order_schema.id_user)
+    new_order = Order(user=order_schema.users_id)
     session.add(new_order)
     session.commit()
     return {"message": f"Order created successfully. ID order {new_order.id}"}
