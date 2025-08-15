@@ -31,12 +31,12 @@ async def auths():
 
 @auth_router.post("/acount_create")
 async def acount_create(schema_user_data: schema_user, session: Session = Depends(take_session)):
-    user = session.query(User).filter(User.email==schema_user_data.email).first()
+    user = session.query(User).filter(User.email==schema_user_data.email, User.admin==False).first()
     if user:
         raise HTTPException(status_code=400,detail="There is Already a User With This Email")
     else:
         encrypted_passwords = bcrypt_context.hash(schema_user_data.passwords)
-        new_user = User(schema_user_data.name, schema_user_data.email, encrypted_passwords, schema_user_data.active, schema_user_data.admin)
+        new_user = User(schema_user_data.name, schema_user_data.email, encrypted_passwords, schema_user_data.active, schema_user_data.admin==False)
         session.add(new_user)
         session.commit()
         return {"Message":f"User Registered Successfully {schema_user_data.email}"}
